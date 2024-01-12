@@ -542,20 +542,16 @@ function getIndicesOfOddNumbers(numbers) {
  *    getHexRGBValues([ 0, 255, 16777215]) => [ '#000000', '#0000FF', '#FFFFFF' ]
  *    getHexRGBValues([]) => []
  */
-function getHexRGBValues(/* arr */) {
-  throw new Error('Not implemented');
-  // if (arr.length === 0) {
-  //   return [];
-  // }
-  // const newArr = arr;
-  // const result = [];
-  // let count = 0;
-  // newArr.map((item) => {
-  //   result.push(parseInt(item, 16));
-  //   count += 1;
-  //   return count;
-  // });
-  // return result;
+function getHexRGBValues(arr) {
+  if (!arr) {
+    return [];
+  }
+  const hexValues = arr.map((number) => {
+    const hex = number.toString(16).padStart(6, '0');
+
+    return `#${hex.toUpperCase()}`;
+  });
+  return hexValues;
 }
 
 /**
@@ -731,8 +727,28 @@ function shiftArray(arr, n) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  if (arr.length === 0) {
+    return [];
+  }
+  const checkerObject = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  const newArr = arr.sort((a, b) => {
+    const current = checkerObject.indexOf(a);
+    const next = checkerObject.indexOf(b);
+    return current - next;
+  });
+  return newArr;
 }
 
 /**
@@ -754,8 +770,28 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const { length } = arr;
+
+  if (length < 1) {
+    return arr;
+  }
+
+  const headEnd = Math.floor(length / 2);
+
+  const headArray = arr.slice(0, headEnd);
+  let endArray;
+  let result;
+
+  if (length % 2 === 0) {
+    endArray = arr.slice(headEnd);
+    result = [...endArray, ...headArray];
+  } else {
+    endArray = arr.slice(headEnd + 1);
+    result = [...endArray, arr[headEnd], ...headArray];
+  }
+
+  return result;
 }
 
 module.exports = {
